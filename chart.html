@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.js Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="temperatureChart"></canvas>
+        <canvas id="humidityChart"></canvas>
+        <canvas id="ethyleneChart"></canvas>
+        <canvas id="vocChart"></canvas>
+        <canvas id="co2Chart"></canvas>
+    </div>
+
+    <script>
+        // Data points from the provided table
+        const labels = [
+            "3/2/2025 10:00", "3/2/2025 11:00", "3/2/2025 12:00", 
+            "3/2/2025 13:00", "3/2/2025 14:00", "3/2/2025 15:00", 
+            "3/2/2025 16:00", "3/2/2025 17:00", "3/2/2025 18:00", 
+            "3/2/2025 19:00"
+        ];
+
+        const temperatureData = [4.5, 5, 4.8, 6, 7.2, 5.5, 4.9, 4.3, 5.1, 6.3];
+        const humidityData = [75, 72, 74, 78, 80, 76, 73, 70, 74, 79];
+        const ethyleneData = [0.2, 0.3, 0.4, 0.6, 1, 0.5, 0.3, 0.2, 0.4, 0.7];
+        const vocData = [0.1, 0.2, 0.3, 0.5, 0.8, 0.4, 0.2, 0.1, 0.3, 0.6];
+        const co2Data = [400, 450, 470, 500, 550, 480, 420, 400, 460, 510];
+
+        // Chart Configuration
+        const createChart = (ctx, label, data, color) => {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: color,
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                }
+            });
+        };
+
+        // Creating Charts
+        const temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+        createChart(temperatureCtx, 'Temperature (°C)', temperatureData, 'rgb(255, 99, 132)');
+
+        const humidityCtx = document.getElementById('humidityChart').getContext('2d');
+        createChart(humidityCtx, 'Humidity (%)', humidityData, 'rgb(54, 162, 235)');
+
+        const ethyleneCtx = document.getElementById('ethyleneChart').getContext('2d');
+        createChart(ethyleneCtx, 'Ethylene (ppm)', ethyleneData, 'rgb(75, 192, 192)');
+
+        const vocCtx = document.getElementById('vocChart').getContext('2d');
+        createChart(vocCtx, 'VOCs (ppm)', vocData, 'rgb(153, 102, 255)');
+
+        const co2Ctx = document.getElementById('co2Chart').getContext('2d');
+        createChart(co2Ctx, 'CO₂ (ppm)', co2Data, 'rgb(255, 159, 64)');
+    </script>
+</body>
+</html>
+
